@@ -347,7 +347,7 @@ public:
         vSeeds.emplace_back("95.217.140.136", true);
         vSeeds.emplace_back("46.4.205.27", true);
         vSeeds.emplace_back("45.138.73.11", true);
-        vSeeds.emplace_back("95.217.166.254", true);  
+        vSeeds.emplace_back("95.217.166.254", true);
 	    vSeeds.emplace_back("45.138.73.123", true);
         vSeeds.emplace_back("198.74.110.185", true);
         vSeeds.emplace_back("95.217.67.241", true);
@@ -528,7 +528,6 @@ public:
         consensus.llmqs[Consensus::LLMQ_5_60] = llmq5_60;
         consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
         consensus.llmqTypeChainLocks = Consensus::LLMQ_50_60;
-        consensus.newLlmqTypeInstantSend = Consensus::LLMQ_5_60;
         consensus.llmqTypeInstantSend = Consensus::LLMQ_5_60;
 
         fDefaultConsistencyChecks = false;
