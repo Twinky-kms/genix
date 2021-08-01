@@ -140,7 +140,7 @@ static CBlock FindDevNetGenesisBlock(const Consensus::Params& params, const CBlo
     error("FindDevNetGenesisBlock: could not find devnet genesis block for %s", devNetName);
     assert(false);
 }
-
+//used for testing in future
 static Consensus::LLMQParams llmq_test = {
         .type = Consensus::LLMQ_TEST,
         .name = "llmq_test",
@@ -168,9 +168,9 @@ static Consensus::LLMQParams llmq5_60 = {
         .threshold = 3,
 
         .dkgInterval = 30, // one DKG per hour
-        .dkgPhaseBlocks = 4,
-        .dkgMiningWindowStart = 20, // dkgPhaseBlocks * 5 = after finalization
-        .dkgMiningWindowEnd = 25,
+        .dkgPhaseBlocks = 2,
+        .dkgMiningWindowStart = 10, // dkgPhaseBlocks * 5 = after finalization
+        .dkgMiningWindowEnd = 24,
         .dkgBadVotesThreshold = 8,
 
         .signingActiveQuorumCount = 2, // just a few ones to allow easier testing
@@ -348,13 +348,13 @@ public:
         vSeeds.emplace_back("46.4.205.27", true);
         vSeeds.emplace_back("45.138.73.11", true);
         vSeeds.emplace_back("95.217.166.254", true);  
-	vSeeds.emplace_back("45.138.73.123", true);
+	    vSeeds.emplace_back("45.138.73.123", true);
         vSeeds.emplace_back("198.74.110.185", true);
         vSeeds.emplace_back("95.217.67.241", true);
         vSeeds.emplace_back("134.255.88.142", true);
         vSeeds.emplace_back("173.208.77.7", true);
         vSeeds.emplace_back("51.15.117.199", true);
-	   
+
         // Genix addresses start with 'G'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,38);
         // Genix script addresses start with '6'
@@ -416,7 +416,7 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210240;
-        consensus.nMasternodePaymentsStartBlock = 2100; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsStartBlock = 3500; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
         consensus.nMasternodePaymentsIncreaseBlock = 4030;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
@@ -434,10 +434,10 @@ public:
         consensus.BIP34Hash = uint256S("0x0000038977617c01646209e33e354174ef916df8284346b29aecfbc98fa43dd0");
         consensus.BIP65Height = 2431; // 0000039cf01242c7f921dcb4806a5994bc003b48c1973ae0c89b67809c2bb2ab
         consensus.BIP66Height = 2075; // 0000002acdd29a14583540cb72e1c5cc83783560e38fa7081495d474fe1671f7
-        consensus.DIP0001Height = 50;
-        consensus.DIP0003Height = 100;
-        consensus.DIP0003EnforcementHeight = 150;
-        consensus.DIP0003EnforcementHash = uint256S("0x000");
+        consensus.DIP0001Height = 3500;
+        consensus.DIP0003Height = 3750;
+        consensus.DIP0003EnforcementHeight = 4000;
+        consensus.DIP0003EnforcementHash = uint256S("0x0000006ed4cd837df1e947724d6552acd87742f2f7b60600b176084cf30e6aab");
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 1 * 60; // Genix: 1 hour
         consensus.nPowTargetSpacing = 2 * 60; // Genix: 2.5 minutes
@@ -489,41 +489,13 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x000"); // 0
 
-        pchMessageStart[0] = 0xcd;
-        pchMessageStart[1] = 0x4d;
-        pchMessageStart[2] = 0x1b;
-        pchMessageStart[3] = 0x43;
+        pchMessageStart[0] = 0xad;
+        pchMessageStart[1] = 0x2c;
+        pchMessageStart[2] = 0x31;
+        pchMessageStart[3] = 0x23;
         nDefaultPort = 32538;
         nPruneAfterHeight = 1000;
         
-/*  
-	        // calculate Genesis Block
-        hashGenesisBlock = genesis.GetHash();
-        if(genesis.GetHash() != uint256("0x"))
-        {
-        printf("MSearching for genesis block...\n");
-        uint256 hashTarget;
-        hashTarget.SetCompact(genesis.nBits);
-        while(uint256(genesis.GetHash()) > uint256(hashTarget))
-        {
-            ++genesis.nNonce;
-            if (genesis.nNonce == 0)
-            {
-                printf("Mainnet NONCE WRAPPED, incrementing time");
-                std::cout << std::string("Mainnet NONCE WRAPPED, incrementing time:\n");
-                ++genesis.nTime;
-            }
-            if (genesis.nNonce % 10000 == 0)
-            {
-               printf("Mainnet: nonce %08u: hash = %s \n", genesis.nNonce, genesis.GetHash().ToString().c_str());
-            }
-        }
-        printf("Mainnet block.nTime = %u \n", genesis.nTime);
-        printf("Mainnet block.nNonce = %u \n", genesis.nNonce);
-        printf("Mainnet block.hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
-        printf("Mainnet block.GetHash = %s\n", genesis.GetHash().ToString().c_str());
-        }
-*/
         genesis = CreateGenesisBlock(1551279600, 2084647557, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0000038977617c01646209e33e354174ef916df8284346b29aecfbc98fa43dd0"));
@@ -534,7 +506,9 @@ public:
 
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("45.77.162.183", true);
+        vSeeds.emplace_back("45.76.0.8", true);
+        vSeeds.emplace_back("37.102.48.39", true);
+        vSeeds.emplace_back("37.102.49.27", true);
 
         // Genix addresses start with 'g'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,98);
@@ -552,11 +526,9 @@ public:
 
         // long living quorum params
         consensus.llmqs[Consensus::LLMQ_5_60] = llmq5_60;
-        consensus.llmqs[Consensus::LLMQ_TEST] = llmq_test;
         consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
-        consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
-        consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
-        consensus.llmqTypeChainLocks = Consensus::LLMQ_TEST;
+        consensus.llmqTypeChainLocks = Consensus::LLMQ_50_60;
+        consensus.newLlmqTypeInstantSend = Consensus::LLMQ_5_60;
         consensus.llmqTypeInstantSend = Consensus::LLMQ_5_60;
 
         fDefaultConsistencyChecks = false;
@@ -677,6 +649,35 @@ public:
         pchMessageStart[3] = 0xce;
         nDefaultPort = 19799;
         nPruneAfterHeight = 1000;
+
+        /*  
+	        // calculate Genesis Block
+        hashGenesisBlock = genesis.GetHash();
+        if(genesis.GetHash() != uint256("0x"))
+        {
+        printf("MSearching for genesis block...\n");
+        uint256 hashTarget;
+        hashTarget.SetCompact(genesis.nBits);
+        while(uint256(genesis.GetHash()) > uint256(hashTarget))
+        {
+            ++genesis.nNonce;
+            if (genesis.nNonce == 0)
+            {
+                printf("Mainnet NONCE WRAPPED, incrementing time");
+                std::cout << std::string("Mainnet NONCE WRAPPED, incrementing time:\n");
+                ++genesis.nTime;
+            }
+            if (genesis.nNonce % 10000 == 0)
+            {
+               printf("Mainnet: nonce %08u: hash = %s \n", genesis.nNonce, genesis.GetHash().ToString().c_str());
+            }
+        }
+        printf("Mainnet block.nTime = %u \n", genesis.nTime);
+        printf("Mainnet block.nNonce = %u \n", genesis.nNonce);
+        printf("Mainnet block.hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
+        printf("Mainnet block.GetHash = %s\n", genesis.GetHash().ToString().c_str());
+        }
+*/
 
         genesis = CreateGenesisBlock(1590304529, 2085344586, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
