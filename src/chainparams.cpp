@@ -178,6 +178,25 @@ static Consensus::LLMQParams llmq5_60 = {
         .keepOldConnections = 3,
 };
 
+// this one is for testing only
+static Consensus::LLMQParams new_llmq5_60 = {
+        .type = Consensus::LLMQ_5_60,
+        .name = "llmq_5_60",
+        .size = 5,
+        .minSize = 3,
+        .threshold = 3,
+
+        .dkgInterval = 30, // one DKG per hour
+        .dkgPhaseBlocks = 2,
+        .dkgMiningWindowStart = 10, // dkgPhaseBlocks * 5 = after finalization
+        .dkgMiningWindowEnd = 24,
+        .dkgBadVotesThreshold = 8,
+
+        .signingActiveQuorumCount = 24, // a full day worth of LLMQs
+
+        .keepOldConnections = 3,
+};
+
 static Consensus::LLMQParams llmq50_60 = {
         .type = Consensus::LLMQ_50_60,
         .name = "llmq_50_60",
@@ -273,6 +292,7 @@ public:
         consensus.DIP0003Height = 445000;
         consensus.DIP0003EnforcementHeight = 450000;
         consensus.DIP0003EnforcementHash = uint256S("0x000000001267505023dcc5c9d4920c045b1291fb4d1bca97c839653f3731cc0e");
+        consensus.quorumSizeForkHeight = INT_MAX;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 1 * 60; // Genix: 1 hour
         consensus.nPowTargetSpacing = 2 * 60; // Genix: 2 minutes
@@ -438,6 +458,7 @@ public:
         consensus.DIP0003Height = 3750;
         consensus.DIP0003EnforcementHeight = 4000;
         consensus.DIP0003EnforcementHash = uint256S("0x0000006ed4cd837df1e947724d6552acd87742f2f7b60600b176084cf30e6aab");
+        consensus.quorumSizeForkHeight = 25000;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 1 * 60; // Genix: 1 hour
         consensus.nPowTargetSpacing = 2 * 60; // Genix: 2.5 minutes
@@ -920,4 +941,36 @@ void UpdateDevnetSubsidyAndDiffParams(int nMinimumDifficultyBlocks, int nHighSub
 void UpdateDevnetLLMQChainLocks(Consensus::LLMQType llmqType)
 {
     globalChainParams->UpdateLLMQChainLocks(llmqType);
+}
+
+void UpdateLLMQParams(int height) {
+	globalChainParams->UpdateLLMQParams(height);
+}
+
+bool IsMiningPhase(Consensus::LLMQParams params, int nHeight)
+{
+    int phaseIndex = nHeight % params.dkgInterval;
+    if (phaseIndex >= params.dkgMiningWindowStart && phaseIndex <= params.dkgMiningWindowEnd) {
+        return true;
+    }
+    return false;
+}
+
+bool IsLLMQsMiningPhase(int nHeight) {
+	for(auto& it : globalChainParams->GetConsensus().llmqs) {
+		if(IsMiningPhase(it.second, nHeight)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void CChainParams::UpdateLLMQParams(int height) {
+	if(!IsLLMQsMiningPhase(height)) {
+		if(height < globalChainParams->GetConsensus().quorumSizeForkHeight) {
+			consensus.llmqs[Consensus::LLMQ_5_60] = llmq5_60;
+		} else {
+			consensus.llmqs[Consensus::LLMQ_5_60] = new_llmq5_60;
+		}
+	}
 }

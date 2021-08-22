@@ -4086,6 +4086,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
                 nGoodTransactions += block.vtx.size();
             }
         }
+        UpdateLLMQParams(pindex->nHeight);
         if (ShutdownRequested())
             return true;
     }

@@ -838,7 +838,7 @@ bool CDeterministicMNManager::BuildNewListFromBlock(const CBlock& block, const C
     }
 
     mnListRet = std::move(newList);
-
+    UpdateLLMQParams(nHeight);
     return true;
 }
 
