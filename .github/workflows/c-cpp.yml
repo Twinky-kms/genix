@@ -122,7 +122,7 @@ jobs:
       run: |
         mkdir -p $ARTIFACT_DIR
         mv $SOURCE_ARTIFACT/src/{genix-cli.exe,genix-tx.exe,genixd.exe,qt/genix-qt.exe} $ARTIFACT_DIR
-        strip $ARTIFACT_DIR/{genix-cli,genix-tx,genixd,genix-qt}
+        strip $ARTIFACT_DIR/src/{genix-cli,genix-tx,genixd,genix-qt}
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
