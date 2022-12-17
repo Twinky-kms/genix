@@ -1744,6 +1744,20 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         return true;
     }
 
+    int stealthForkVersion = chainActive.Height() >= chainparams.StealthForkHeight() ? 
+            STEALTH_FORK_MIN_PEER_PROTO_VERSION : MIN_PEER_PROTO_VERSION;
+    if (pfrom->nVersion != 0)
+    {
+        if (pfrom->nVersion < stealthForkVersion)
+        {
+            LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->id, pfrom->nVersion);
+            connman.PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
+                                    strprintf("Version must be %d or greater", stealthForkVersion)));
+            pfrom->fDisconnect = true;
+            return false;
+        }
+    }
+
     if (!(pfrom->GetLocalServices() & NODE_BLOOM) &&
               (strCommand == NetMsgType::FILTERLOAD ||
                strCommand == NetMsgType::FILTERADD))

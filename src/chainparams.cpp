@@ -247,6 +247,7 @@ public:
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
         consensus.nMasternodeMinimumConfirmations = 15;
+        consensus.nStealthForkHeight = 912000;
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256S("0x000005c44e04128d9953a742860dbe3c10fb527a3605462cb6bd3e36dd6a285a");
         consensus.BIP65Height = 42000;
@@ -322,7 +323,7 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0000038977617c01646209e33e354174ef916df8284346b29aecfbc98fa43dd0"));
         assert(genesis.hashMerkleRoot == uint256S("93113cc5a2df97b20bbe91731578c6722080355be0b4b83b60c6b9ac535d5d15"));
 
-	vSeeds.emplace_back("dnsseed.genix.cc", true);
+	    vSeeds.emplace_back("dnsseed.genix.cc", true);
         vSeeds.emplace_back("207.148.3.153", true);
         vSeeds.emplace_back("209.126.81.147", true);
         vSeeds.emplace_back("95.217.97.197", true);
