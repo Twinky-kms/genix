@@ -304,7 +304,7 @@ public:
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000f08d9f1aa70235");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x0000000007a7fbf69e06f90048c85e9d8de74961184c71363306c2b4d3f46fe7");
+        consensus.defaultAssumeValid = uint256S("0x000000004ae45afea503f87b0a1d3bace7f2be35c2e1d9679ab54313dfad695c");
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -323,8 +323,6 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0000038977617c01646209e33e354174ef916df8284346b29aecfbc98fa43dd0"));
         assert(genesis.hashMerkleRoot == uint256S("93113cc5a2df97b20bbe91731578c6722080355be0b4b83b60c6b9ac535d5d15"));
 
-        //delete this
-        vSeeds.emplace_back("172.99.233.168", true);
 	    vSeeds.emplace_back("dnsseed.genix.cc", true);
         vSeeds.emplace_back("207.148.3.153", true);
         vSeeds.emplace_back("209.126.81.147", true);
@@ -387,6 +385,7 @@ public:
                 {400000, uint256S("0x000000000213b178f330c0978f7218ec34af06ac78c652a472f0d6314d1273cd")},
                 {500000, uint256S("0x0000000014c623f1b319630b23ccf434a6f63c673e4c4aaa644913a7225f7802")},
                 {600000, uint256S("0x00000000312b80031cd051c03917cfc34796f3e41d3cb73d430423e51d5b785b")},
+                {912005, uint256S("000000004ae45afea503f87b0a1d3bace7f2be35c2e1d9679ab54313dfad695c")},
             }
         };
 

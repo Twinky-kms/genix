@@ -1845,7 +1845,9 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             return false;
         }
 
-        if (nVersion < MIN_PEER_PROTO_VERSION)
+        int stealthForkVersion = chainActive.Height() >= chainparams.StealthForkHeight() ? 
+            STEALTH_FORK_MIN_PEER_PROTO_VERSION : MIN_PEER_PROTO_VERSION;
+        if (nVersion < MIN_PEER_PROTO_VERSION || nVersion < stealthForkVersion)
         {
             // disconnect from peers older than this proto version
             LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->GetId(), nVersion);
