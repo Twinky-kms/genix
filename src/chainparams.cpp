@@ -247,7 +247,7 @@ public:
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
         consensus.nMasternodeMinimumConfirmations = 15;
-        consensus.nStealthForkHeight = 912000;
+        consensus.nStealthForkHeight = 917000;
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256S("0x000005c44e04128d9953a742860dbe3c10fb527a3605462cb6bd3e36dd6a285a");
         consensus.BIP65Height = 42000;
@@ -385,7 +385,6 @@ public:
                 {400000, uint256S("0x000000000213b178f330c0978f7218ec34af06ac78c652a472f0d6314d1273cd")},
                 {500000, uint256S("0x0000000014c623f1b319630b23ccf434a6f63c673e4c4aaa644913a7225f7802")},
                 {600000, uint256S("0x00000000312b80031cd051c03917cfc34796f3e41d3cb73d430423e51d5b785b")},
-                {912005, uint256S("000000004ae45afea503f87b0a1d3bace7f2be35c2e1d9679ab54313dfad695c")},
             }
         };
 
