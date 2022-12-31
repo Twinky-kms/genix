@@ -1750,7 +1750,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
     {
         if (pfrom->nVersion < stealthForkVersion)
         {
-            LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->GetId(), pfrom->nVersion);
+            LogPrintf("peer=%d using obsolete version %i; disconnecting t2-ffff\n", pfrom->GetId(), pfrom->nVersion);
             connman->PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
                                     strprintf("Version must be %d or greater", stealthForkVersion)));
             pfrom->fDisconnect = true;
@@ -1850,7 +1850,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         if (nVersion < MIN_PEER_PROTO_VERSION || nVersion < stealthForkVersion)
         {
             // disconnect from peers older than this proto version
-            LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->GetId(), nVersion);
+            LogPrintf("peer=%d using obsolete version %i; disconnecting t1-ffff\n", pfrom->GetId(), nVersion);
             connman->PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
                                strprintf("Version must be %d or greater", MIN_PEER_PROTO_VERSION)));
             pfrom->fDisconnect = true;
