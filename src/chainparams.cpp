@@ -304,7 +304,7 @@ public:
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000f08d9f1aa70235");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x000000004ae45afea503f87b0a1d3bace7f2be35c2e1d9679ab54313dfad695c");
+        consensus.defaultAssumeValid = uint256S("0x000000000c6d4a2a408caa906643d3ef3a0bf173c7d91cfa773217fd78aa58aa");
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
