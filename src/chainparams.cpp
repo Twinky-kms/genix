@@ -247,7 +247,7 @@ public:
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
         consensus.nMasternodeMinimumConfirmations = 15;
-        consensus.nStealthForkHeight = 917000;
+        consensus.nStealthForkHeight = 924000;
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256S("0x000005c44e04128d9953a742860dbe3c10fb527a3605462cb6bd3e36dd6a285a");
         consensus.BIP65Height = 42000;
