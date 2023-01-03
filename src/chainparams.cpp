@@ -324,19 +324,7 @@ public:
         assert(genesis.hashMerkleRoot == uint256S("93113cc5a2df97b20bbe91731578c6722080355be0b4b83b60c6b9ac535d5d15"));
 
         vSeeds.emplace_back("dnsseed.genix.cc", true);
-        vSeeds.emplace_back("207.148.3.153", true);
-        vSeeds.emplace_back("209.126.81.147", true);
-        vSeeds.emplace_back("95.217.97.197", true);
-        vSeeds.emplace_back("37.102.49.40", true);
-        vSeeds.emplace_back("95.217.140.136", true);
         vSeeds.emplace_back("95.217.166.254", true);
-        vSeeds.emplace_back("95.217.67.241", true);
-        vSeeds.emplace_back("37.102.49.31", true);
-        vSeeds.emplace_back("95.217.140.162", true);
-        vSeeds.emplace_back("209.126.81.54", true);
-        vSeeds.emplace_back("173.208.77.54", true);
-        vSeeds.emplace_back("46.4.205.26", true);
-        vSeeds.emplace_back("37.102.49.29", true);
 	   
         // Genix addresses start with 'G'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,38);
