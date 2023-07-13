@@ -720,7 +720,7 @@ public:
         consensus.DIP0003EnforcementHash = uint256();
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 1
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Genix: 1 day
-        consensus.nPowTargetSpacing = 2.5 * 60; // Genix: 2.5 minutes
+        consensus.nPowTargetSpacing = 2 * 60; // Genix: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
@@ -757,10 +757,10 @@ public:
         nDefaultPort = 19899;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1417713337, 1096447, 0x207fffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1551279600, 2084647557, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"));
-        assert(genesis.hashMerkleRoot == uint256S("0xe0028eb9648db56b1ac77cf090b99048a8007e2bb64b68f092c03c7f56a662c7"));
+        assert(consensus.hashGenesisBlock == uint256S("0000038977617c01646209e33e354174ef916df8284346b29aecfbc98fa43dd0"));
+        assert(genesis.hashMerkleRoot == uint256S("93113cc5a2df97b20bbe91731578c6722080355be0b4b83b60c6b9ac535d5d15"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -784,7 +784,7 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
-                {0, uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e")},
+                // {0, uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e")},
             }
         };
 
@@ -811,7 +811,7 @@ public:
         // long living quorum params
         consensus.llmqs[Consensus::LLMQ_5_60] = llmq5_60;
         consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
-        consensus.llmqTypeChainLocks = Consensus::LLMQ_5_60;
+        consensus.llmqTypeChainLocks = Consensus::LLMQ_50_60;
         consensus.llmqTypeInstantSend = Consensus::LLMQ_5_60;
     }
 };
