@@ -28,6 +28,7 @@ jobs:
         sudo apt-get update
         pip3 install wheel
         pip3 install --user futoin-cid
+        sudo bash -c "echo 0 > /proc/sys/fs/binfmt_misc/status"
     - name: Create Distribution Tarball
       run: |
         ./autogen.sh
